@@ -1,4 +1,9 @@
+// _MyAppState is public
+// but _MyAppState is private
+//private things is only accessible in that file where it is created
+//Question is widget written in another dart file
 import 'package:flutter/material.dart';
+import './question.dart';
 
 void main() => runApp(new MyApp());
 
@@ -6,18 +11,18 @@ class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questionIndex = 0;
-  void answerQuestion() {
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
+  void _answerQuestion() {
     setState(() {
-      questionIndex = ++questionIndex;
+      _questionIndex = ++_questionIndex;
     });
 
-    print(questionIndex);
+    print(_questionIndex);
     // print('Answer chosen');
   }
 
@@ -26,6 +31,7 @@ class MyAppState extends State<MyApp> {
     var questions = [
       'what is your favorite Color?',
       'what\'s your favorite animaal?',
+      'what is your favorite book?'
     ];
     return MaterialApp(
       home: Scaffold(
@@ -34,8 +40,14 @@ class MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            Text(questions[questionIndex]),
-            ElevatedButton(child: Text("Answer 1"), onPressed: answerQuestion),
+            Question(questions[_questionIndex]),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green),
+              ),
+              child: Text("Answer 1"),
+              onPressed: _answerQuestion,
+            ),
             ElevatedButton(
                 child: Text("Answer 2"),
                 onPressed: () => print("Answer 2 chosen!")),
